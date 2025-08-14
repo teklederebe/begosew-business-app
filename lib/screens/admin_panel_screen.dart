@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utils/localization.dart';
+import '../utils/pdf_invoice.dart';
 
 class AdminPanelScreen extends StatelessWidget {
   @override
@@ -31,4 +32,23 @@ class AdminPanelScreen extends StatelessWidget {
       ),
     );
   }
+  ElevatedButton(
+  onPressed: () async {
+    final file = await generateInvoice(
+      customerName: 'Abebe Kebede',
+      vendorName: 'Begosew Cement',
+      invoiceNumber: 'INV-001',
+      date: DateTime.now(),
+      items: [
+        {'name': 'Cement', 'qty': 10, 'price': 400},
+        {'name': 'Rebar', 'qty': 5, 'price': 600},
+      ],
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Invoice generated: ${file.path}')),
+    );
+  },
+  child: Text('🧾 Generate Invoice'),
+),
 }
